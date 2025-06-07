@@ -1,5 +1,8 @@
 pipeline {
    agent none
+   tools{
+    mvn "mymaven"
+   }
     stages {
         stage('Compile') { //prod
         agent any
