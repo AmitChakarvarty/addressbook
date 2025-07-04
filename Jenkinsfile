@@ -3,11 +3,16 @@ pipeline {
    tools{
     maven "mymaven"
    }
+   parameters{
+    string(name: 'Env', defaultValue: 'Test', description: 'Environment to deploy')
+    booleanParam(name: 'executeTests', defaultValue: true, description: 'decide to run')
+    choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'])
+   }
     stages {
         stage('Compile') { //prod
         agent any
             steps {
-                echo "Compile the code"
+                echo "Compile the code in ${params.Env}"
                 sh "mvn compile"
             }
         }
@@ -26,7 +31,7 @@ pipeline {
          stage('Package') { //dev
             agent {label 'linux-slave'}
             steps {
-                echo "Package the code"
+                echo "Package the code ${params.APPVERSION}"
                 sh "mvn package"
             }
         }
