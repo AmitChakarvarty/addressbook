@@ -38,7 +38,7 @@ pipeline {
             input{
                 message "select the version to deploy"
                 ok "version selected"
-                psrameters{
+                parameters{
                     choice(name: 'NEWAPP', choices: ['1.2', '2.1', '3.1'])
                 }
             }
