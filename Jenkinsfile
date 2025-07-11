@@ -3,6 +3,9 @@ pipeline {
    tools{
     maven "mymaven"
    }
+   environment{
+            DEV_SERVER_IP='ec2-user@172.31.81.141'
+   }
    parameters{
     string(name: 'Env', defaultValue: 'Test', description: 'Environment to deploy')
     booleanParam(name: 'executeTests', defaultValue: true, description: 'decide to run')
@@ -48,8 +51,13 @@ pipeline {
                 }
             }
             steps {
+                script{
+                    sshagent([PACKAGE_SERVER]){
                 echo "Package the code ${params.APPVERSION}"
-                sh "mvn package"
+                sh "scp -o StrictHostKeyCheking=no server-script.sh ${DEV_SERVER_IP}:/home/ec2-user"
+                sh "ssh -o StrictHostKeyCheking=no ${DEV_SERVER_IP} 'bash ~/server-script.sh'"
+                  }
+                }
             }
         }
     }
