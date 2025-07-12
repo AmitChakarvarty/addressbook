@@ -13,7 +13,7 @@ pipeline {
    }
     stages {
         stage('Compile') { //prod
-        agent {label 'linux_slave'}
+        agent {label 'linux-slave'}
             steps {
                 echo "Compile the code in ${params.Env}"
                 sh "mvn compile"
