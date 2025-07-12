@@ -13,7 +13,7 @@ pipeline {
    }
     stages {
         stage('Compile') { //prod
-        agent any
+        agent {label 'linux_slave'}
             steps {
                 echo "Compile the code in ${params.Env}"
                 sh "mvn compile"
@@ -52,7 +52,7 @@ pipeline {
             }
             steps {
                 script{
-                    sshagent(['slave2']){
+                    sshagent(['slave2']) {
                 echo "Package the code ${params.APPVERSION}"
                 sh "scp -o stricthostkeychecking=no server-script.sh ${DEV_SERVER_IP}:/home/ec2-user"
                 sh "ssh -o stricthostkeychecking=no ${DEV_SERVER_IP} 'bash ~/server-script.sh'"
