@@ -54,8 +54,8 @@ pipeline {
                 script{
                     sshagent(['slave2']){
                 echo "Package the code ${params.APPVERSION}"
-                sh "scp -o stricthostkeycheking=no server-script.sh ${DEV_SERVER_IP}:/home/ec2-user"
-                sh "ssh -o stricthostkeycheking=no ${DEV_SERVER_IP} 'bash ~/server-script.sh'"
+                sh "scp -o stricthostkeychecking=no server-script.sh ${DEV_SERVER_IP}:/home/ec2-user"
+                sh "ssh -o stricthostkeychecking=no ${DEV_SERVER_IP} 'bash ~/server-script.sh'"
                   }
                 }
             }
